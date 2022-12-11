@@ -14,6 +14,17 @@
 
 # [START cloudbuild_quickstart_automate]
 steps:
-  - name: golang
-    args: ['go', 'run', 'quickstart-automate/main.go']
+    - name: gcr.io/cloud-builders/git
+      args:
+          - submodule
+          - update
+          - "--init"
+          - "--recursive"
+      id: Submodules
+  
+    - name: gcr.io/$PROJECT_ID/remote-builder
+      env:
+          - COMMAND1=echo "Test remote-builder"        
+          - COMMAND2=pwd
+          - COMMAND3=ls -a          
 # [END cloudbuild_quickstart_automate]
